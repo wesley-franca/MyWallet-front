@@ -1,5 +1,7 @@
-import styled from "styled-components";
-import "./assets/css/reset.css"
+import LoginPage from "./content/LoginPage.js";
+import RegistrationPage from "./content/RegistrationPage.js";
+
+import "./assets/css/reset.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -7,7 +9,7 @@ function App() {
     <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginPage />} />
-          <Route path="/register" element={<RegistrationPage />} />
+          <Route path="/cadastro" element={<RegistrationPage />} />
         </Routes>
     </BrowserRouter> 
 )}

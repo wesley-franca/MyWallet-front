@@ -1,12 +1,16 @@
+import Context from "../tools/Context.js";
+
 import { useState } from "react";
-import {  ThreeDots } from  'react-loader-spinner';
-import { useNavigate } from "react-router-dom";
+import { ThreeDots } from 'react-loader-spinner';
+import { useContext } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 function LoginPage() {
-    const [isDisable, SetIsDisable] = useState(false)
-    const load = ( isDisable? <ThreeDots 
+    // eslint-disable-next-line no-unused-vars
+    const [profile, setProfile] = useContext(Context);
+    const [isDisable, setIsDisable] = useState(false);
+    const load = (isDisable ? <ThreeDots
         height="80"
         width="80"
         radius="9"
@@ -14,18 +18,20 @@ function LoginPage() {
         ariaLabel="three-dots-loading"
         wrapperStyle={{}}
         wrapperClassName=""
-        visible={true}/>    
-        : "Entrar")
-    const navigate = useNavigate()
+        visible={true} />
+        : "Entrar");
+    const navigate = useNavigate();
 
     function handleForm(e) {
         e.preventDefault();
-        SetIsDisable(true)
+        setIsDisable(true);
         const body = {
             email: e.target[0].value,
             password: e.target[1].value
-        }
-        console.log(body)
+        };
+        console.log(body);
+        setProfile({ token: "meu lindo token", userId: "meulindo user id" });
+        return (navigate("/home"));
     }
 
     return (
@@ -52,7 +58,7 @@ function LoginPage() {
             </Container>
         </Wrapper>
 
-    )
+    );
 }
 
 const Wrapper = styled.div`
@@ -102,7 +108,7 @@ const Loginform = styled.form`
         ::placeholder {
         color: #000000;
         }
-        }
+    }
 `
 const Loginbutton = styled.button`
     height: 45px;
@@ -116,7 +122,7 @@ const Loginbutton = styled.button`
     font-size: 21px;
     color: #FFFFFF;
     margin-bottom: 25px;
-    opacity: ${props=>props.bluur? 0.7 : 1};
+    opacity: ${props => props.bluur ? 0.7 : 1};
 `
 
 export default LoginPage;

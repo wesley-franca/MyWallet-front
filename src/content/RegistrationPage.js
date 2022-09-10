@@ -1,11 +1,14 @@
-import {Link} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useState } from "react";
-import {  ThreeDots } from  'react-loader-spinner';
+import { ThreeDots } from 'react-loader-spinner';
+import { CreateAccount } from "../tools/UseAxios.js";
+
 
 function RegistrationPage() {
-    const [isDisable, SetIsDisable] = useState(false)
-    const load = ( isDisable? <ThreeDots 
+    const navigate = useNavigate();
+    const [isDisable, SetIsDisable] = useState(false);
+    const load = (isDisable ? <ThreeDots
         height="80"
         width="80"
         radius="9"
@@ -13,24 +16,29 @@ function RegistrationPage() {
         ariaLabel="three-dots-loading"
         wrapperStyle={{}}
         wrapperClassName=""
-        visible={true}/>    
-        : "Cadastrar")
+        visible={true} />
+        : "Cadastrar");
 
     function handleForm(e) {
         e.preventDefault();
-        SetIsDisable(true)
-        if(e.target[2].value === e.target[3].value) {
+        SetIsDisable(true);
+        if (e.target[2].value === e.target[3].value) {
             const body = {
                 name: e.target[0].value,
                 email: e.target[1].value,
                 password: e.target[2].value
             }
-            console.log(body)
+            CreateAccount(body).then(
+                () => { return (navigate("/")) }
+            ).catch((error) => {
+                alert(`${error.response.data}`);
+                SetIsDisable(false);
+            });
         } else {
-            SetIsDisable(false)
-            alert("Por favor, verifique os dados inseridos")
+            SetIsDisable(false);
+            alert("Por favor, verifique os dados inseridos");
         }
-        
+
     }
 
 
@@ -53,14 +61,14 @@ function RegistrationPage() {
                         disabled={isDisable}
                         required />
 
-                    <input type="text"
+                    <input type="password"
                         name="password"
                         placeholder="Senha"
                         disabled={isDisable}
                         required />
 
-                    <input type="text"
-                        name="password"
+                    <input type="password"
+                        name="password confirmation"
                         placeholder="Confirme a senha"
                         disabled={isDisable}
                         required />
@@ -71,9 +79,9 @@ function RegistrationPage() {
                     <New>Já tem uma conta? Faça login!</New>
                 </Link>
             </Container>
-            
+
         </Wrapper>
-    )
+    );
 }
 
 
@@ -139,6 +147,6 @@ const Registbutton = styled.button`
     font-size: 21px;
     color: #FFFFFF;
     margin-bottom: 25px;
-    opacity: ${props=>props.bluur? 0.7 : 1};
+    opacity: ${props => props.bluur ? 0.7 : 1};
 `
 export default RegistrationPage;

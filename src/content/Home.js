@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { Link, useNavigate, } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import Context from "../tools/Context.js";
-import { GetMovimentationList } from "../tools/UseAxios.js";
+import { GetMovimentationList, Logout } from "../tools/UseAxios.js";
 import Movimentation from "./Movimentation.js";
-import Logout from "../assets/images/Logout.png"
+import LogoutIcon from "../assets/images/LogoutIcon.png"
 function Home() {
     const navigate = useNavigate();
     // eslint-disable-next-line no-unused-vars
@@ -50,6 +50,19 @@ function Home() {
         color = true;
     }
 
+    function logout(props) {
+        try {
+            Logout(profile).then(() => {
+                return (navigate("/"));
+            }).catch((error) => {
+                console.error(error);
+                alert(`${error.response.data}`);
+            });
+        } catch (error) {
+            console.error(error);
+            alert(`${error.response.data}`);
+        }
+    }
     function Navigate(props) {
         return (navigate(`/home/${props}`, { state: props }));
     }
@@ -95,9 +108,9 @@ function Home() {
                 <Container>
                     <Top>
                         <div>Olá, Fulano</div>
-                        <Link to={"/"}>
-                            <div> <img src={Logout} alt=""/> </div>
-                        </Link>
+                        <div onClick={() => { logout(); }}> 
+                            <img src={LogoutIcon} alt=""/> 
+                        </div>
                     </Top>
                     <RegistersFull>
 

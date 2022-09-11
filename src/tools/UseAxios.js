@@ -34,5 +34,14 @@ function CreateMovimentation(body, profile) {
     return promise;
 }
 
+function Logout(profile) {
+    const config = {
+        headers: {
+            "user": profile.userId
+        }
+    };
+    const promise = axios.delete(`${mainURL}/logout`, config );
+    return promise;
+}
 
-export { CreateAccount, Login, GetMovimentationList, CreateMovimentation };
+export { CreateAccount, Login, GetMovimentationList, CreateMovimentation, Logout };

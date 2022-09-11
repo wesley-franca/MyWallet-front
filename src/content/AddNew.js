@@ -9,6 +9,7 @@ import { CreateMovimentation } from "../tools/UseAxios.js";
 function AddNew() {
     const location = useLocation();
     const Data = location.state;
+    // eslint-disable-next-line no-unused-vars
     const [profile, setProfile] = useContext(Context);
     const [isDisable, setIsDisable] = useState(false);
     const navigate = useNavigate();
@@ -28,8 +29,8 @@ function AddNew() {
         setIsDisable(true);
         const body = {
             type: Data.charAt(0).toUpperCase() + Data.slice(1),
-            value: e.target[0].value,
-            description: e.target[1].value
+            value: Number(e.target[0].value).toFixed(2),
+            description:  e.target[1].value.charAt(0).toUpperCase() + e.target[1].value.slice(1),
         };
         CreateMovimentation(body, profile).then((res) => {
             return (navigate("/home"));

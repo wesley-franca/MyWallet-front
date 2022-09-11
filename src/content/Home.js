@@ -1,51 +1,141 @@
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { Link, useNavigate, } from "react-router-dom";
+import { useContext, useState, useEffect } from "react";
 import Context from "../tools/Context.js";
-
+import { GetMovimentationList } from "../tools/UseAxios.js";
+import Movimentation from "./Movimentation.js";
 
 function Home() {
     const navigate = useNavigate();
+    // eslint-disable-next-line no-unused-vars
     const [profile, setProfile] = useContext(Context);
-    let movimentationContent = <h3>Não há registro de <br /> entrada ou saída</h3>
-    
+    const [hasMovimentations, setHasMovimentations] = useState(false);
+    const [movimentationList, setMovimentationList] = useState([{}]);
+    const [total, setTotal] = useState(0);
+    let color = true;
+
+    useEffect(() => {
+        try {
+            GetMovimentationList(profile).then((res) => {
+                let aux = 0;
+                if (res.data.length > 0) {
+                    setMovimentationList(res.data);
+                    setHasMovimentations(true);
+                    const positive = res.data.filter(value => value.body.type === "Entrada");
+                    const negative = res.data.filter(value => value.body.type === "Saida");
+
+                    for (let i = 0; i < positive.length; i++) {
+                        aux += Number(positive[i].body.value);
+                    };
+                    for (let i = 0; i < negative.length; i++) {
+                        aux -= Number(negative[i].body.value);
+                    };
+                    setTotal(aux);
+                } else {
+                    setHasMovimentations(false);
+                }
+            }).catch((error) => {
+                console.error(error);
+                alert(`${error.response.data}`);
+            });
+        } catch (error) {
+            console.error(error);
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+    if(total < 0){
+        color = false;
+    } else{
+        color = true;
+    }
+
     function Navigate(props) {
         return (navigate(`/home/${props}`, { state: props }));
     }
-    return (
-        <Wrapper>
-            <Container>
-                <Top>
-                    <div>Olá, Fulano</div>
-                    <Link to={"/"}>
-                        <div>log-out</div>
-                    </Link>
-                </Top>
-                <Registers>
-                    {movimentationContent}
-                </Registers>
-                <Bottom>
-                    <New onClick={()=>{Navigate("entrada");}}>
-                        <div>
-                            +
-                        </div>
-                        <div>
-                            Nova <br /> entrada
-                        </div>
-                    </New>
-                    <New onClick={()=>{Navigate("saida");}}>
-                        <div>
-                            -
-                        </div>
-                        <div>
-                            Nova <br /> saída
-                        </div>
-                    </New>
-                </Bottom>
 
-            </Container>
-        </Wrapper>
-    );
+    if (!hasMovimentations) {
+        return (
+            <Wrapper>
+                <Container>
+                    <Top>
+                        <div>Olá, Fulano</div>
+                        <Link to={"/"}>
+                            <div>log-out</div>
+                        </Link>
+                    </Top>
+                    <Registers>
+                        <h3>Não há registro de <br /> entrada ou saída</h3>
+                    </Registers>
+                    <Bottom>
+                        <New onClick={() => { Navigate("entrada"); }}>
+                            <div>
+                                +
+                            </div>
+                            <div>
+                                Nova <br /> entrada
+                            </div>
+                        </New>
+                        <New onClick={() => { Navigate("saida"); }}>
+                            <div>
+                                -
+                            </div>
+                            <div>
+                                Nova <br /> saída
+                            </div>
+                        </New>
+                    </Bottom>
+
+                </Container>
+            </Wrapper>
+        );
+    } else if (movimentationList.length > 0) {
+        return (
+            <Wrapper>
+                <Container>
+                    <Top>
+                        <div>Olá, Fulano</div>
+                        <Link to={"/"}>
+                            <div>log-out</div>
+                        </Link>
+                    </Top>
+                    <RegistersFull>
+
+                        <Content>
+                            {movimentationList.map((movimentation, index) => {
+                                return <Movimentation movimentation={movimentation} key={index} />
+                            })}
+                        </Content>
+
+                        <Total color={color}> 
+                            <h2>SALDO</h2>
+                            <h1>{Number(total).toFixed(2)}</h1>
+                        </Total>
+
+                    </RegistersFull>
+                    <Bottom>
+                        <New onClick={() => { Navigate("entrada"); }}>
+                            <div>
+                                +
+                            </div>
+                            <div>
+                                Nova <br /> entrada
+                            </div>
+                        </New>
+                        <New onClick={() => { Navigate("saida"); }}>
+                            <div>
+                                -
+                            </div>
+                            <div>
+                                Nova <br /> saída
+                            </div>
+                        </New>
+                    </Bottom>
+
+                </Container>
+            </Wrapper>
+        );
+    }
 }
 
 const Wrapper = styled.div`
@@ -93,6 +183,20 @@ const Registers = styled.div`
         text-align: center;
     }
 `
+const RegistersFull = styled.div`
+    width: 100%;
+    height: 70%;
+    background-color: #ffffff;
+    border-radius: 5px;
+    margin: 22px 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: space-between;
+    justify-content: center;
+    padding: 12px;
+`
+
 const Bottom = styled.div`
     width: 100%;
     display: flex;
@@ -114,6 +218,28 @@ const New = styled.div`
     font-weight: 700;
     font-size: 17px;
     color: #ffffff;
+`
+const Total = styled.div`
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h1{
+        font-weight: 400;
+        font-size: 17px;
+        color: ${props=> props.color? "#03AC00" : "#C70000"};
+    }
+    h2{
+        font-weight: 700;
+        font-size: 17px;
+        color: #000000;
+    }
+`
+const Content = styled.div`
+    width: 100%;
+    max-height: 95%;
+    overflow: scroll;
 `
 
 export default Home;

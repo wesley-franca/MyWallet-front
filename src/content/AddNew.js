@@ -87,9 +87,9 @@ const Top = styled.div`
     display: flex;
     justify-content:  space-between;
     align-items: center;
-    /* font-family: 'Raleway'; */
     font-weight: 700;
     font-size: 26px;
+    font-family: 'Raleway', sans-serif;
     color: #ffffff;
     margin-bottom: 40px;
 `
@@ -105,6 +105,7 @@ const AddForm = styled.form`
         border: solid 1px #D5D5D5;
         font-weight: 400;
         font-size: 20px;
+        font-family: 'Raleway', sans-serif;
         padding: 15px;
         border-radius: 5px;
         margin-bottom: 15px;
@@ -123,6 +124,7 @@ const AddButtom = styled.button`
     border: none;
     border-radius: 5px;
     font-size: 21px;
+    font-family: 'Raleway', sans-serif;
     color: #FFFFFF;
     margin-bottom: 25px;
     opacity: ${props => props.bluur ? 0.5 : 1};

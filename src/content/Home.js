@@ -4,7 +4,7 @@ import { useContext, useState, useEffect } from "react";
 import Context from "../tools/Context.js";
 import { GetMovimentationList } from "../tools/UseAxios.js";
 import Movimentation from "./Movimentation.js";
-
+import Logout from "../assets/images/Logout.png"
 function Home() {
     const navigate = useNavigate();
     // eslint-disable-next-line no-unused-vars
@@ -96,7 +96,7 @@ function Home() {
                     <Top>
                         <div>Olá, Fulano</div>
                         <Link to={"/"}>
-                            <div>log-out</div>
+                            <div> <img src={Logout} alt=""/> </div>
                         </Link>
                     </Top>
                     <RegistersFull>
@@ -158,7 +158,7 @@ const Top = styled.div`
     display: flex;
     justify-content:  space-between;
     align-items: center;
-    /* font-family: 'Raleway'; */
+    font-family: 'Raleway', sans-serif;
     font-weight: 700;
     font-size: 26px;
     color: #ffffff;
@@ -180,6 +180,7 @@ const Registers = styled.div`
         color: #868686;
         font-weight: 400;
         font-size: 20px;
+        font-family: 'Raleway', sans-serif;
         text-align: center;
     }
 `
@@ -217,6 +218,7 @@ const New = styled.div`
     padding: 10px;
     font-weight: 700;
     font-size: 17px;
+    font-family: 'Raleway', sans-serif;
     color: #ffffff;
 `
 const Total = styled.div`
@@ -228,11 +230,13 @@ const Total = styled.div`
     h1{
         font-weight: 400;
         font-size: 17px;
+        font-family: 'Raleway', sans-serif;
         color: ${props=> props.color? "#03AC00" : "#C70000"};
     }
     h2{
         font-weight: 700;
         font-size: 17px;
+        font-family: 'Raleway', sans-serif;
         color: #000000;
     }
 `

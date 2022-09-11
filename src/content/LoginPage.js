@@ -88,6 +88,7 @@ const Title = styled.h1`
 `
 const New = styled.p`
     font-size: 14;
+    font-family: 'Raleway', sans-serif;
     color: #FFFFFF;
     text-decoration-line: underline;
     a{
@@ -105,6 +106,7 @@ const Loginform = styled.form`
         border: solid 1px #D5D5D5;
         font-weight: 400;
         font-size: 20px;
+        font-family: 'Raleway', sans-serif;
         padding: 15px;
         border-radius: 5px;
         margin-bottom: 15px;
@@ -123,6 +125,7 @@ const Loginbutton = styled.button`
     border: none;
     border-radius: 5px;
     font-size: 21px;
+    font-family: 'Raleway', sans-serif;
     color: #FFFFFF;
     margin-bottom: 25px;
     opacity: ${props => props.bluur ? 0.5 : 1};

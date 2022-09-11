@@ -31,12 +31,14 @@ justify-content: space-between;
 align-items: center;
 h2{
     font-size: 16px;
+    font-family: 'Raleway', sans-serif;
     font-weight: 400;
 }
 h3{
     color: #C6C6C6;
     font-weight: 400;
     font-size: 16px;
+    font-family: 'Raleway', sans-serif;
     text-align: center;
     margin-right: 5px;
 }
@@ -48,6 +50,7 @@ const Price = styled.div`
 h1{
     font-weight: 400;
     font-size: 16px;
+    font-family: 'Raleway', sans-serif;
     color: ${props=> props.color? "#03AC00" : "#C70000"};
 }
 `

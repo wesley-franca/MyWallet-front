@@ -31,7 +31,7 @@ function LoginPage() {
             password: e.target[1].value
         };
         Login(body).then((res) => {
-            setProfile({ token: res.data.token, userId: res.data._id });
+            setProfile({ token: res.data.token, userId: res.data._id, username: res.data.username});
             return (navigate("/home"));
         }).catch((error) => {
             console.error(error);

@@ -72,10 +72,10 @@ function Home() {
             <Wrapper>
                 <Container>
                     <Top>
-                        <div>Olá, Fulano</div>
-                        <Link to={"/"}>
-                            <div>log-out</div>
-                        </Link>
+                        <div>Olá, {profile.username}</div>
+                        <div onClick={() => { logout(); }}>
+                            <img src={LogoutIcon} alt="" />
+                        </div>
                     </Top>
                     <Registers>
                         <h3>Não há registro de <br /> entrada ou saída</h3>
@@ -98,7 +98,6 @@ function Home() {
                             </div>
                         </New>
                     </Bottom>
-
                 </Container>
             </Wrapper>
         );
@@ -107,19 +106,17 @@ function Home() {
             <Wrapper>
                 <Container>
                     <Top>
-                        <div>Olá, Fulano</div>
+                        <div>Olá, {profile.username}</div>
                         <div onClick={() => { logout(); }}> 
                             <img src={LogoutIcon} alt=""/> 
                         </div>
                     </Top>
                     <RegistersFull>
-
                         <Content>
                             {movimentationList.map((movimentation, index) => {
                                 return <Movimentation movimentation={movimentation} key={index} />
                             })}
                         </Content>
-
                         <Total color={color}> 
                             <h2>SALDO</h2>
                             <h1>{Number(total).toFixed(2)}</h1>
@@ -144,7 +141,6 @@ function Home() {
                             </div>
                         </New>
                     </Bottom>
-
                 </Container>
             </Wrapper>
         );

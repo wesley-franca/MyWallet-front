@@ -7,5 +7,32 @@ function CreateAccount(body) {
     return promise;
 }
 
+function Login(body) {
+    const promise = axios.post(`${mainURL}/login`, body);
+    return promise;
+}
 
-export { CreateAccount };
+function GetMovimentationList(profile) {
+    const config = {
+        headers: {
+            "Authorization": profile.token,
+            "user": profile.userId
+        }
+    };
+    const promise = axios.get(`${mainURL}/movimentation`, config );
+    return promise;
+}
+
+function CreateMovimentation(body, profile) {
+    const config = {
+        headers: {
+            "Authorization": profile.token,
+            "user": profile.userId
+        }
+    };
+    const promise = axios.post(`${mainURL}/movimentation`,body, config );
+    return promise;
+}
+
+
+export { CreateAccount, Login, GetMovimentationList, CreateMovimentation };

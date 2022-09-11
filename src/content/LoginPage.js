@@ -1,4 +1,5 @@
 import Context from "../tools/Context.js";
+import { Login } from "../tools/UseAxios.js";
 
 import { useState } from "react";
 import { ThreeDots } from 'react-loader-spinner';
@@ -29,9 +30,14 @@ function LoginPage() {
             email: e.target[0].value,
             password: e.target[1].value
         };
-        console.log(body);
-        setProfile({ token: "meu lindo token", userId: "meulindo user id" });
-        return (navigate("/home"));
+        Login(body).then((res) => {
+            setProfile({ token: res.data.token, userId: res.data._id });
+            return (navigate("/home"));
+        }).catch((error) => {
+            console.error(error);
+            alert(`${error.response.data}`);
+            setIsDisable(false);
+        });
     }
 
     return (
@@ -44,7 +50,6 @@ function LoginPage() {
                         placeholder="email"
                         disabled={isDisable}
                         required />
-
                     <input type="password"
                         name="password"
                         placeholder="senha"
@@ -57,7 +62,6 @@ function LoginPage() {
                 </Link>
             </Container>
         </Wrapper>
-
     );
 }
 
@@ -94,7 +98,6 @@ const Loginform = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
-
     input{
         width: 303px;
         height: 45px;
@@ -122,7 +125,7 @@ const Loginbutton = styled.button`
     font-size: 21px;
     color: #FFFFFF;
     margin-bottom: 25px;
-    opacity: ${props => props.bluur ? 0.7 : 1};
+    opacity: ${props => props.bluur ? 0.5 : 1};
 `
 
 export default LoginPage;

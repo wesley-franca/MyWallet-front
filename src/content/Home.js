@@ -1,15 +1,14 @@
-import Context from "../tools/Context.js";
-
 import styled from "styled-components";
-import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import Context from "../tools/Context.js";
 
 
 function Home() {
-    // eslint-disable-next-line no-unused-vars
-    const [profile, setProfile] = useContext(Context);
-    console.log(profile)
     const navigate = useNavigate();
+    const [profile, setProfile] = useContext(Context);
+    let movimentationContent = <h3>Não há registro de <br /> entrada ou saída</h3>
+    
     function Navigate(props) {
         return (navigate(`/home/${props}`, { state: props }));
     }
@@ -23,7 +22,7 @@ function Home() {
                     </Link>
                 </Top>
                 <Registers>
-                    <h3>Não há registro de <br /> entrada ou saída</h3>
+                    {movimentationContent}
                 </Registers>
                 <Bottom>
                     <New onClick={()=>{Navigate("entrada");}}>
@@ -77,7 +76,6 @@ const Top = styled.div`
         text-decoration: none;
         color: #ffffff;
     }
-    
 `
 const Registers = styled.div`
     width: 100%;

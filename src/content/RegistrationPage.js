@@ -31,6 +31,7 @@ function RegistrationPage() {
             CreateAccount(body).then(
                 () => { return (navigate("/")) }
             ).catch((error) => {
+                console.error(error)
                 alert(`${error.response.data}`);
                 SetIsDisable(false);
             });

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link, useNavigate, } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import Context from "../tools/Context.js";
 import { GetMovimentationList, Logout } from "../tools/UseAxios.js";
@@ -56,11 +56,11 @@ function Home() {
                 return (navigate("/"));
             }).catch((error) => {
                 console.error(error);
-                alert(`${error.response.data}`);
+                return (navigate("/"));
             });
         } catch (error) {
             console.error(error);
-            alert(`${error.response.data}`);
+            return (navigate("/"));
         }
     }
     function Navigate(props) {

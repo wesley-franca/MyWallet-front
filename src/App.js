@@ -9,7 +9,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 
 function App() {
-  const [profile, setProfile] = useState({});
+  const [profile, setProfile] = useState(JSON.parse(localStorage.getItem("profile")));
   return (
     <Context.Provider value={[profile, setProfile]}>
       <BrowserRouter>

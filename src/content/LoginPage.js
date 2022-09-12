@@ -30,11 +30,11 @@ function LoginPage() {
             email: e.target[0].value,
             password: e.target[1].value
         };
-        Login(body).then((res) => {
-            window.localStorage.setItem(profile,
+        Login(body).then( async (res) => {
+            await window.localStorage.setItem("profile",
                 JSON.stringify({ token: res.data.token, userId: res.data._id, username: res.data.username })
                 );
-            setProfile({ token: res.data.token, userId: res.data._id, username: res.data.username });
+            setProfile(JSON.parse(localStorage.getItem("profile")));
             return (navigate("/home"));
         }).catch((error) => {
             console.error(error);

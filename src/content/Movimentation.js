@@ -1,29 +1,58 @@
 import styled from "styled-components";
+import { useContext } from "react";
+import Context from "../tools/Context.js";
+
+import { DeleteMovimentation } from "../tools/UseAxios.js"
 
 
-
-function Movimentation({ movimentation, index }) {
+function Movimentation({ movimentation, reload, setReload }) {
+    // eslint-disable-next-line no-unused-vars
+    const [profile, setProfile] = useContext(Context);
     const data = movimentation.body;
     let color;
-    if(data.type === "Entrada") {
+    if (data.type === "Entrada") {
         color = true;
-    } else{
+    } else {
         color = false;
     }
 
+    function deleteMovimentation() {
+        const body = { movimentationId: movimentation._id }
+        const confirmation = window.confirm(`Tem certeza que deseja excluir permanentemente a ${data.type} ${data.description}`)
+        if(confirmation) {
+            try {
+                DeleteMovimentation(body, profile).then((res) => {
+                    setReload(!reload);
+                    console.log("deu bom");
+                }).catch((error) => {
+                    console.error(error);
+                    alert(`${error.response.data}`);
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        } else {
+            return;
+        }
+
+        
+    }
     return (
-        <Mov>
+        <Wrapper>
             <Left>
                 <div><h3>{data.time}</h3></div>
                 <div><h2>{data.description}</h2></div>
             </Left>
+            <Right>
+                <Price color={color}> <h1>{data.value}</h1></Price>
+                <DeleteButtom onClick={() => { deleteMovimentation() }}>x</DeleteButtom>
+            </Right>
 
-            <Price color={color}> <h1>{data.value}</h1></Price>
-        </Mov>
+        </Wrapper>
     )
 }
 
-const Mov = styled.div`
+const Wrapper = styled.div`
 width: 100%;
 height: 35px;
 display: flex;
@@ -46,12 +75,21 @@ h3{
 const Left = styled.div`
     display: flex;
 `
+const Right = styled.div`
+    display: flex;
+`
 const Price = styled.div`
 h1{
     font-weight: 400;
     font-size: 16px;
+    line-height: 19px;
     font-family: 'Raleway', sans-serif;
-    color: ${props=> props.color? "#03AC00" : "#C70000"};
+    color: ${props => props.color ? "#03AC00" : "#C70000"};
 }
+`
+const DeleteButtom = styled.div`
+    font-size: 20px;
+    color: #C6C6C6;
+    margin-left: 10px;   
 `
 export default Movimentation;

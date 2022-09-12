@@ -12,6 +12,16 @@ function Login(body) {
     return promise;
 }
 
+function Logout(profile) {
+    const config = {
+        headers: {
+            "user": profile.userId
+        }
+    };
+    const promise = axios.delete(`${mainURL}/logout`, config );
+    return promise;
+}
+
 function GetMovimentationList(profile) {
     const config = {
         headers: {
@@ -30,18 +40,20 @@ function CreateMovimentation(body, profile) {
             "user": profile.userId
         }
     };
-    const promise = axios.post(`${mainURL}/movimentation`,body, config );
+    const promise = axios.post(`${mainURL}/movimentation`, body, config );
     return promise;
 }
 
-function Logout(profile) {
+function DeleteMovimentation(body, profile) {
     const config = {
         headers: {
-            "user": profile.userId
+            "Authorization": profile.token,
+            "user": profile.userId,
+            "movimentationId": body.movimentationId
         }
     };
-    const promise = axios.delete(`${mainURL}/logout`, config );
+    const promise = axios.delete(`${mainURL}/movimentation`, config );
     return promise;
 }
 
-export { CreateAccount, Login, GetMovimentationList, CreateMovimentation, Logout };
+export { CreateAccount, Login, Logout, GetMovimentationList, CreateMovimentation, DeleteMovimentation };

@@ -9,6 +9,7 @@ function Home() {
     const navigate = useNavigate();
     // eslint-disable-next-line no-unused-vars
     const [profile, setProfile] = useContext(Context);
+    const [reload, setReload] = useState(true);
     const [hasMovimentations, setHasMovimentations] = useState(false);
     const [movimentationList, setMovimentationList] = useState([{}]);
     const [total, setTotal] = useState(0);
@@ -43,7 +44,7 @@ function Home() {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [reload]);
     if(total < 0){
         color = false;
     } else{
@@ -51,11 +52,14 @@ function Home() {
     }
 
     function logout(props) {
+        
         try {
             Logout(profile).then(() => {
+                window.localStorage.clear();
                 return (navigate("/"));
             }).catch((error) => {
                 console.error(error);
+                window.localStorage.clear();
                 return (navigate("/"));
             });
         } catch (error) {
@@ -114,7 +118,11 @@ function Home() {
                     <RegistersFull>
                         <Content>
                             {movimentationList.map((movimentation, index) => {
-                                return <Movimentation movimentation={movimentation} key={index} />
+                                return <Movimentation movimentation={
+                                    movimentation}
+                                    reload={reload}
+                                    setReload={setReload}
+                                    key={index} />
                             })}
                         </Content>
                         <Total color={color}> 

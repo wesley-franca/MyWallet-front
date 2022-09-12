@@ -22,7 +22,7 @@ function AddNew() {
         wrapperStyle={{}}
         wrapperClassName=""
         visible={true} />
-        : `salvar ${Data}`);
+        : `Salvar ${Data}`);
 
     function handleForm(e) {
         e.preventDefault();
@@ -60,6 +60,7 @@ function AddNew() {
                         required />
                     <AddButtom disabled={isDisable} bluur={isDisable}>{load}</AddButtom>
                 </AddForm>
+                <AddButtom onClick={()=>{return (navigate("/home"))}}>Cancelar</AddButtom>
             </Container>
         </Wrapper>
     )
@@ -126,7 +127,7 @@ const AddButtom = styled.button`
     font-size: 21px;
     font-family: 'Raleway', sans-serif;
     color: #FFFFFF;
-    margin-bottom: 25px;
+    margin-bottom: 17px;
     opacity: ${props => props.bluur ? 0.5 : 1};
 `
 

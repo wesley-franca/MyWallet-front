@@ -18,12 +18,12 @@ function Movimentation({ movimentation, reload, setReload }) {
 
     function deleteMovimentation() {
         const body = { movimentationId: movimentation._id }
-        const confirmation = window.confirm(`Tem certeza que deseja excluir permanentemente a ${data.type} ${data.description}`)
+        const type = data.type.toLowerCase();
+        const confirmation = window.confirm(`Tem certeza que deseja excluir permanentemente a ${type} ${data.description}`)
         if(confirmation) {
             try {
                 DeleteMovimentation(body, profile).then((res) => {
                     setReload(!reload);
-                    console.log("deu bom");
                 }).catch((error) => {
                     console.error(error);
                     alert(`${error.response.data}`);

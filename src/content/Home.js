@@ -5,6 +5,8 @@ import Context from "../tools/Context.js";
 import { GetMovimentationList, Logout } from "../tools/UseAxios.js";
 import Movimentation from "./Movimentation.js";
 import LogoutIcon from "../assets/images/LogoutIcon.png"
+import minus from "../assets/images/minus.png"
+import plus from "../assets/images/plus.png"
 function Home() {
     const navigate = useNavigate();
     // eslint-disable-next-line no-unused-vars
@@ -87,7 +89,7 @@ function Home() {
                     <Bottom>
                         <New onClick={() => { Navigate("entrada"); }}>
                             <div>
-                                +
+                                <img src={plus} alt="adicionar entrada"/>
                             </div>
                             <div>
                                 Nova <br /> entrada
@@ -95,7 +97,7 @@ function Home() {
                         </New>
                         <New onClick={() => { Navigate("saida"); }}>
                             <div>
-                                -
+                                <img src={minus} alt="adicionar saida"/>
                             </div>
                             <div>
                                 Nova <br /> saída
@@ -134,7 +136,7 @@ function Home() {
                     <Bottom>
                         <New onClick={() => { Navigate("entrada"); }}>
                             <div>
-                                +
+                                <img src={plus} alt="adicionar entrada"/>
                             </div>
                             <div>
                                 Nova <br /> entrada
@@ -142,7 +144,7 @@ function Home() {
                         </New>
                         <New onClick={() => { Navigate("saida"); }}>
                             <div>
-                                -
+                                <img src={minus} alt="adicionar saida"/>
                             </div>
                             <div>
                                 Nova <br /> saída
@@ -259,7 +261,7 @@ const Total = styled.div`
 `
 const Content = styled.div`
     width: 100%;
-    max-height: 95%;
+    height: 95%;
     overflow: scroll;
 `
 

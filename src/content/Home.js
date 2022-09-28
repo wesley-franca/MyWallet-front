@@ -18,6 +18,9 @@ function Home() {
     let color = true;
 
     useEffect(() => {
+        if (profile === null) {
+            return (navigate("/"))
+        }
         try {
             GetMovimentationList(profile).then((res) => {
                 let aux = 0;
@@ -44,9 +47,9 @@ function Home() {
         } catch (error) {
             console.error(error);
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [reload]);
+    }, [reload]);    
+
     if(total < 0){
         color = false;
     } else{
@@ -78,7 +81,7 @@ function Home() {
             <Wrapper>
                 <Container>
                     <Top>
-                        <div>Olá, {profile.username}</div>
+                        <div>Olá, {profile? profile.username : "nope"}</div>
                         <div onClick={() => { logout(); }}>
                             <img src={LogoutIcon} alt="" />
                         </div>

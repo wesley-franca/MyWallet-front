@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Context from "../tools/Context.js";
 import { ThreeDots } from 'react-loader-spinner';
@@ -23,6 +23,13 @@ function AddNew() {
         wrapperClassName=""
         visible={true} />
         : `Salvar ${Data}`);
+        console.log(profile)
+    useEffect(()=>{
+        if (profile === null) {
+            return (navigate("/"))
+        }
+    });
+        
 
     function handleForm(e) {
         e.preventDefault();

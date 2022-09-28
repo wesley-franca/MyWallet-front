@@ -23,7 +23,6 @@ function AddNew() {
         wrapperClassName=""
         visible={true} />
         : `Salvar ${Data}`);
-        console.log(profile)
     useEffect(()=>{
         if (profile === null) {
             return (navigate("/"))
